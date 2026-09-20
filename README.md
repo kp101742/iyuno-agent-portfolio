@@ -64,3 +64,54 @@ https://iyuno.wd3.myworkdayjobs.com/careers/job/seoul/ai-agent-engineer_jr101122
 
 프로젝트 진행 과정에서 구현하지 못한 기능이나
 성능상의 한계를 정리하여 최종 README에 기록할 예정입니다.
+
+# Iyuno AI Agent Ecosystem
+
+Iyuno의 미디어 번역 및 로컬라이제이션 워크플로우 지원을 위한 **RAG + Tool Calling + Evaluation + Streamlit** 기반 AI Agent 프로토타입입니다.
+
+---
+
+## 🔑 Key Features
+
+1. **Context-Aware RAG Engine (`src/rag/`)**
+   - 용어집(Glossary) 및 도메인 가이드를 파싱하여 Vector DB(Chroma)에 색인합니다.
+   - 쿼리 의도에 따라 상위 $K$개 관련 맥락을 추출하여 LLM 환각 현상을 최소화합니다.
+
+2. **Function Calling / Tool Integration (`src/agent/`)**
+   - 외부 API 연동(번역 검증, 용어 사전 검색, 자막 타임코드 검증 등)을 수행하는 커스텀 Tool 구현.
+   - LLM이 자율적으로 어떤 도구를 호출할지 판단하여 정밀한 태스크를 실행합니다.
+
+3. **System Evaluation (`src/eval/`)**
+   - RAG 파이프라인 및 에이전트 답변 정밀도 평가 (Ragas 기반 Faithfulness, Relevancy 측정).
+   - Tool Calling 선택 및 실행 정확도를 검증합니다.
+
+4. **Interactive Streamlit Interface (`app.py`)**
+   - 에이전트의 Reasoning Step(생각 과정 및 Tool 호출 로그)을 실시간 스트리밍으로 시각화합니다.
+
+---
+
+## 🛠 Tech Stack
+
+- **Language:** Python 3.11+
+- **LLM Orchestration:** LangChain / LangGraph
+- **Vector DB:** ChromaDB
+- **UI Framework:** Streamlit
+- **Evaluation:** Ragas / TruLens
+
+---
+
+## 🚀 Quick Start
+
+### 1. 환경 설정 및 가상환경 구축
+
+```bash
+# 레포지토리 클론
+git clone [https://github.com/your-username/iyuno-ai-agent.git](https://github.com/your-username/iyuno-ai-agent.git)
+cd iyuno-ai-agent
+
+# 가상환경 생성 및 활성화
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# 의존성 패키지 설치
+pip install -r requirements.txt
